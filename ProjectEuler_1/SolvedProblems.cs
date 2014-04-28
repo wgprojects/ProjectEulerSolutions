@@ -2379,15 +2379,445 @@ namespace ProjectEuler_1
 
         internal static void Problem53()
         {
+            //April 25, 2014
+            int count = 0;
+            for (int n = 1; n <= 100; n++)
+            {
+                for (int r = 1; r <= n; r++)
+                {
+                    double lognCr = Util.GammaLn(n + 1) - Util.GammaLn(r + 1) - Util.GammaLn(n - r + 1);
+
+                    if(lognCr > Math.Log(1000000))
+                        count++;
+                }
+            }
+            Console.WriteLine("Count: {0}", count);
+        }
+
+        internal static void Problem54()
+        {
+            //April 26, 2014
+            int P1Wins = 0;
+            foreach (String line in File.ReadAllLines("../../P54.txt"))
+            {
+
+                List<Card> P1 = new List<Card>();
+                List<Card> P2 = new List<Card>();
+                int num = 0;
+                foreach (string card in line.Split(new char[] { ' ' }))
+                {
+                    Card c = Card.Parse(card);
+                    if (num < 5)
+                        P1.Add(c);
+                    else
+                        P2.Add(c);
+
+                    num++;
+                }
+
+                if (Util.CompareCardHands(P1, P2))
+                    P1Wins++;
+
+                
+            }
+
+            Console.WriteLine("P1 won {0} times", P1Wins);
+        }
+
+        internal static void Problem55()
+        {
+            //April 26, 2014
+            int numLychrelNumbers = 0;
+            for (int i = 10; i < 10000; i++)
+            {
+                bool isLychrel = true;
+                BigInteger num = i;
+                for (int j = 0; j < 60; j++)
+                {
+
+                    num = Util.Lychel(num);
+
+                    if (Util.IsPalindrome(num.ToString()))
+                    {
+                        isLychrel = false;
+                        break;
+                    }
+                }
+
+                if(isLychrel)
+                    numLychrelNumbers++;
+            }
+
+            Console.WriteLine("There are {0} Lychrel numbers in [1..10000]", numLychrelNumbers);
+        }
+
+        internal static void Problem56()
+        {
+            //April 26, 2014
+            int largestDigitalSum = 0;
+            for (int a = 2; a < 100; a++)
+            {
+                for (int b = 2; b < 100; b++)
+                {
+                    BigInteger result = 1;
+                    for (int i = 1; i <= b; i++)
+                    {
+                        result *= a;
+                    }
+
+                    int digitalSum = 0;
+                    foreach (char c in result.ToString())
+                        digitalSum += c - '0';
+
+                    if (digitalSum > largestDigitalSum)
+                        largestDigitalSum = digitalSum;
+                    //Console.WriteLine("{0}^{1} = {2} with digital sum {3}", a, b, result, digitalSum);
+                    //Console.ReadLine();
+                }
+            }
+
+            Console.WriteLine("Largest digital sum: {0}", largestDigitalSum);
+        }
+
+        internal static void Problem57()
+        {
+            //April 26, 2014
+            List<BigInteger> num = new List<BigInteger>();
+            List<BigInteger> den = new List<BigInteger>();
+            int moreDigitsInNum = 0;
+
+            for (int exp = 0; exp < 1000; exp++)
+            {
+                num.Add(2);
+                den.Add(1);
+
+                for (int i = 0; i < num.Count; i++)
+                {
+                    BigInteger tmp = num[i];
+                    num[i] = den[i];
+                    den[i] = tmp;
+
+                    num[i] += 2 * den[i]; //Add 2/1 and invert num/den
+                }
+            }
+
+            for (int i = 0; i < num.Count; i++)
+            {
+                BigInteger tmp = num[i];
+                num[i] = den[i];
+                den[i] = tmp;
+
+                num[i] += den[i];
+                if (num[i].ToString().Length > den[i].ToString().Length)
+                {
+                    moreDigitsInNum++;
+                    //Console.WriteLine("{0}  {1}/{2}", i, num[i], den[i]);
+                }
+            }
+
+            Console.WriteLine("{0}", moreDigitsInNum);
+        }
+
+        internal static void Problem58()
+        {
+            //April 26, 2014
+            int max = 1000000000;
+            PrimesSieve ps = new PrimesSieve(max);
+            Console.WriteLine("Sieve complete");
+            int idx = 1;
+            int SL = 1;
+
+            int nPrime = 0;
+            int nTotal = 1;
+
+            while (max > 0)
+            {
+                SL += 2;
+                int nextIdx = 2 * SL + 2 * (SL - 2);
+
+                //Console.WriteLine("\n\nSL: {0}", SL);
+
+                for (int i = 1; i <= 4; i++)
+                {
+                    int corner = idx + i * (SL - 1);
+                    //Console.WriteLine(corner);
+
+                    if (corner > max)
+                    {
+                        max = 0;
+                        break;
+                    }
+
+                    if (ps.IsPrime(corner))
+                        nPrime++;
+                    nTotal++;
+                }
+
+                if((nPrime / (float)nTotal) < 0.1)
+                {
+                    break;
+                }
+
+                idx += nextIdx;
+            }
+            Console.WriteLine("At side length {0} the diagonal primes fell below 10%, {1}/{2}", SL, nPrime, nTotal);
+        }
+
+        internal static void Problem59()
+        {
+            //April 26, 2014
+            //Love the solution to this one. Not super efficient, but it all worked the first try!
+            //Thanks, Jeopardy (RSTLNE)
+            string file = File.ReadAllText("../../P59.txt");
+            string[] chars = file.Split(new char[] { ',' });
+
+            List<char> rawMsg = new List<char>();
+            foreach (string ch in chars)
+                rawMsg.Add((char)int.Parse(ch));
+
+            float maxProbability = 0;
+            int[] maxPW = null;
+
+            for(int a = 'a'; a<='z'; a++)
+            {
+                for(int b = 'a'; b<='z'; b++)
+                {
+                    for (int c = 'a'; c <= 'z'; c++)
+                    {
+                        int[] pw = new int[] { a, b, c };
+
+                        int pwidx = 0;
+                        List<char> decrypt = new List<char>();
+                        bool fail = false;
+                        foreach (char ch in rawMsg)
+                        {
+                            int decr = ch ^ pw[pwidx];
+                            pwidx = (pwidx + 1) % 3;
+
+                            if (decr < 32 || decr > 128)
+                            {
+                                fail = true;
+                                break;
+                            }
+                            decrypt.Add((char)decr);
+                            //Console.Write((char)decr);
+                        }
+
+                        if (!fail)
+                        {
+                            int maxWordLen = 20;
+                            int[] wordLengths = new int[maxWordLen];
+                            Array.Clear(wordLengths, 0, maxWordLen);
+
+                            float[] stats = new float[128];
+                            Array.Clear(stats, 0, 128);
+                            int currWordLen = 0;
+
+
+                            foreach (char ch in decrypt)
+                            {
+                                if (ch < 128)
+                                    stats[ch]++;
+
+                                if (ch == ' ')
+                                {
+                                    if (currWordLen >= maxWordLen - 1)
+                                        currWordLen = maxWordLen - 1;
+                                    wordLengths[currWordLen]++;
+                                    currWordLen = 0;
+                                }
+                                else
+                                {
+                                    currWordLen++;
+                                }
+                            }
+
+                            for (int i = 0; i < 128; i++)
+                                stats[i] /= decrypt.Count;
+
+                            float probability = 0;
+
+
+                            for (int i = 3; i < 8; i++)
+                                probability += 0.01f * wordLengths[i];
+
+                            for (int i = 8; i < maxWordLen; i++)
+                                probability -= 0.05f * wordLengths[i];
+
+                            for (int i = 0; i < 128; i++)
+                                probability -= 0.01f * stats[i];
+
+                            for (int i = 'a'; i <= 'z'; i++)
+                                probability += 0.01f * stats[i];
+
+                            probability += 0.03f * stats['r'];
+                            probability += 0.03f * stats['s'];
+                            probability += 0.03f * stats['t'];
+                            probability += 0.03f * stats['l'];
+                            probability += 0.03f * stats['n'];
+                            probability += 0.05f * stats['e'];
+
+                            probability -= 0.05f * stats['z'];
+                            probability -= 0.05f * stats['q'];
+                            probability -= 0.03f * stats['j'];
+
+
+                            if (probability > maxProbability)
+                            {
+                                maxProbability = probability;
+                                maxPW = new int[3];
+                                Array.Copy(pw, maxPW, 3);
+                            }
+                        }
+                    }
+                }
+            }
+
+            Console.WriteLine("Best suggestion for password is {0}{1}{2}:", (char)maxPW[0], (char)maxPW[1], (char)maxPW[2]);
+            int pwidx2 = 0;
+
+            int sum = 0;
+            foreach (char ch in rawMsg)
+            {
+                int decr = ch ^ maxPW[pwidx2];
+                pwidx2 = (pwidx2 + 1) % 3;
+
+                Console.Write((char)decr);
+                sum += decr;
+            }
+            Console.WriteLine("Sum of ASCII text: {0}", sum);
+           
+        }
+
+        internal static void Problem60()
+        {
+            //April 27, 2014
+            //So slow it barely counts as a solution.
+            //Luckily the first solution it happens to generate was the correct one, but that wasn't guaranteed.
+            long max = 100000000;
+            PrimesSieve2 ps = new PrimesSieve2(max);
+            Console.WriteLine("Sieve complete.");
+            List<List<long>> pairs = new List<List<long>>();
+
+            foreach (long prime in ps.Primes())
+            {
+                for (long mate = prime + 2; mate < 30000; mate++)
+                {
+                     if (!ps.IsPrime(mate))
+                        continue;
+
+                    string one = prime.ToString() + mate.ToString();
+                    long oneVal = long.Parse(one);
+                    if (oneVal > max)
+                        break;
+                    bool onePrime = ps.IsPrime((int)oneVal);
+                    if (!onePrime)
+                        continue;
+
+                    string two = mate.ToString() + prime.ToString();
+                    long twoVal = long.Parse(two);
+                    if (twoVal > max)
+                        break;
+                    bool twoPrime = ps.IsPrime((int)twoVal);
+                    if (!twoPrime)
+                        continue;
+
+                    List<long> pair = new List<long>() { prime, mate };
+                    pairs.Add(pair);
+                }
+            }
+
+            HashSet<long> set = new HashSet<long>();
+
+            foreach(List<long> pair in pairs)
+            {
+                if (pair.Contains(5197) || pair.Contains(5701) || pair.Contains(6733) || pair.Contains(8389))
+                        Console.WriteLine("{0} {1}", pair[0], pair[1]);
+            }
+
+                Console.WriteLine("Pairings complete");
+                Util.BacktrackP60(set, pairs, 0);
+            }
+
+        internal static void Problem61()
+        {
+            //April 27, 2014.
+            //Nice, clean solution. 
+            CachedFunction<long, long> Triangle = new CachedFunction<long, long>(a => a * (a + 1) / 2);
+            CachedFunction<long, long> Square = new CachedFunction<long, long>(a => a * a);
+            CachedFunction<long, long> Pentagonal = new CachedFunction<long, long>(a => a * (3 * a - 1) / 2);
+            CachedFunction<long, long> Hexagonal = new CachedFunction<long, long>(a => a * (2 * a - 1));
+            CachedFunction<long, long> Heptagonal = new CachedFunction<long, long>(a => a * (5 * a - 3) / 2);
+            CachedFunction<long, long> Octagonal = new CachedFunction<long, long>(a => a * (3 * a - 2));
+
+            Triangle.SetInverse(a => Math.Pow((int)Math.Sqrt(8 * a + 1), 2) == a * 8 + 1);
+            Square.SetInverse(a => Math.Pow((int)Math.Sqrt(a), 2) == a);
+            Pentagonal.SetInverse(a => (1 + Math.Sqrt(24 * a + 1)) / 6 == (int)((1 + Math.Sqrt(24 * a + 1)) / 6) );
+            Hexagonal.SetInverse(a => (1 + Math.Sqrt(8 * a + 1)) / 4 == (int)((1 + Math.Sqrt(8 * a + 1)) / 4) );
+            Heptagonal.SetInverse(a => (3 + Math.Sqrt(40 * a + 9)) / 10 == (int)((3 + Math.Sqrt(40 * a + 9)) / 10) );
+            Octagonal.SetInverse(a => (1 + Math.Sqrt(3 * a + 1)) / 3 == (int)((1 + Math.Sqrt(3 * a + 1)) / 3));
+
+            CachedFunction<long, long>[] fcns = new CachedFunction<long, long>[] { Triangle, Square, Pentagonal, Hexagonal, Heptagonal, Octagonal };
+
+            bool[] used = new bool[fcns.Length];
+            Array.Clear(used, 0, fcns.Length);
+            used[5] = true;
+
+            for(int i=1010; i<=9999; i++)
+            {
+                if (!Octagonal.IsResult(i))
+                    continue;
+
+                List<int> solution = new List<int>();
+                solution.Add(i);
+
+                Util.BacktrackP61(solution, fcns, used);
+
+            }
+        }
+
+        internal static void Problem62()
+        {
             throw new NotImplementedException();
         }
+    }
     }//end of class
+
+    class Card
+    {
+        static List<char> suits = new List<char>() { 'H', 'C', 'S', 'D' };
+
+        public int suit = -1;
+        public int number = -1;
+
+        public static Card Parse(string input)
+        {
+            Card c = new Card();
+            List<char> numbers = new List<char>() { 'T', 'J', 'Q', 'K', 'A' };
+
+            char n = input[0];
+            if (n >= '0' && n <= '9')
+                c.number = n - '0';
+            else
+                c.number = numbers.IndexOf(n) + 10;
+            
+            
+            c.suit = suits.IndexOf(input[1]);
+            return c;
+        }
+
+        public override string ToString()
+        {
+            return String.Format("{0}{1}", number, suits[suit]);
+        }
+    }
 
     class CachedFunction<T1, T2> where T1 : IComparable where T2 : IComparable
     {
         Dictionary<T1, T2> cache = new Dictionary<T1, T2>();
 
         Func<T1, T2> functionToCache;
+        Func<T2, bool> functionInverse;
 
         public CachedFunction(Func<T1, T2> _functionToCache)
         {
@@ -2406,6 +2836,25 @@ namespace ProjectEuler_1
                     cache.Add(x, valueAtX);
                 return valueAtX;
             }
+        }
+
+
+        public void SetInverse(Func<T2, bool> _functionInverse)
+        {
+            functionInverse = _functionInverse;
+        }
+
+        /// <summary>
+        /// Returns true if y = f(x) where x is some integer
+        /// </summary>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public bool IsResult(T2 y)
+        {
+            if (functionInverse == null)
+                throw new InvalidOperationException();
+
+            return functionInverse(y);
         }
 
     }
@@ -2515,6 +2964,49 @@ namespace ProjectEuler_1
         }
     }
 
+    class PrimesSieve2
+    {
+        bool[] notPrime;
+        public PrimesSieve2(long n)
+        {
+
+            notPrime = new bool[n];
+
+
+            notPrime[0] = true;
+            notPrime[1] = true;
+            for (long i = 0; i < n; i++)
+            {
+                if (notPrime[i])
+                    continue;
+
+                long mult = 2;
+                while (mult * i < n)
+                {
+                    notPrime[mult * i] = true;
+                    mult++;
+                }
+
+            }
+        }
+
+        public IEnumerable<long> Primes()
+        {
+            for (long i = 1; i < notPrime.Length; i++)
+            {
+                if (!notPrime[i])
+                    yield return i;
+            }
+        }
+
+        public bool IsPrime(long idx)
+        {
+            if (idx >= notPrime.Length)
+                throw new ArgumentOutOfRangeException(idx.ToString());
+            return !notPrime[idx];
+        }
+    }
+
     //Problem 2
     class CachedFibonacci
     {
@@ -2541,6 +3033,31 @@ namespace ProjectEuler_1
 
     class Util
     {
+        public static BigInteger Lychel(BigInteger input)
+        {
+            string rev = "";
+            foreach (char c in input.ToString().Reverse())
+                rev += c;
+
+            return input + BigInteger.Parse(rev);   
+        }
+        public static double GammaLn(int xx)
+        {
+            //From Numerical Recipes in C
+            double x,y,tmp,ser;
+            double[] cof = new double[6]{76.18009172947146,-86.50532032941677,
+            24.01409824083091,-1.231739572450155,
+            0.1208650973866179e-2,-0.5395239384953e-5};
+            int j;
+            x = xx;
+            y = xx;
+            tmp=x+5.5;
+            tmp -= (x+0.5)*Math.Log(tmp);
+            ser=1.000000000190015;
+            for (j=0;j<=5;j++) ser += cof[j]/++y;
+            return -tmp+Math.Log(2.5066282746310005*ser/x);
+
+        }
 
         public static IEnumerable<List<int>> ChangePossibilities(int changeToGive, List<int> coinSizes, List<int> currentChange)
         {
@@ -2779,5 +3296,337 @@ namespace ProjectEuler_1
             return divisors;
         }
 
+
+        internal static bool CompareCardHands(List<Card> P1, List<Card> P2)
+        {
+            foreach (Card c in P1)
+                Console.Write("{0} ", c);
+
+            Console.WriteLine("");
+            Console.WriteLine("vs");
+
+            foreach (Card c in P2)
+                Console.Write("{0} ", c);
+
+            Console.WriteLine("");
+            Console.WriteLine("");
+
+            string HRP1 = HandRank(P1);
+            string HRP2 = HandRank(P2);
+
+            Console.WriteLine("{0}\nvs\n{1}", HRP1, HRP2);
+            Console.WriteLine("");
+
+            Console.WriteLine(HRP1.CompareTo(HRP2));
+
+            //Console.ReadLine();
+            return (HRP1.CompareTo(HRP2)) > 0;
+        }
+        internal static string HandRank(List<Card> hand)
+        {
+            bool flush = true;
+            string score = "";
+
+            List<int> values = new List<int>();
+
+            foreach (Card c in hand)
+            {
+                if (c.suit != hand[0].suit)
+                    flush = false;
+
+                values.Add(c.number);
+            }
+
+            if(flush && values.Contains(10) && values.Contains(11) && values.Contains(12) && values.Contains(13) && values.Contains(14))
+                score += "RF1"; //Royal flush
+            else
+                score += "RF0";
+
+            bool straight = false;
+
+           
+            for(int i=2; i<=14; i++)
+            {
+                if(values.Contains(i) && values.Contains(i+1) && values.Contains(i+2) && values.Contains(i+3) && values.Contains(i+4))
+                {
+                    straight = true;
+                }
+            }
+            
+
+            if(straight & flush)
+                score += "SF1";
+            else
+                score += "SF0";
+
+            values.Sort();
+            values.Reverse();
+            
+            
+            int[] matching = new int[5];
+            Array.Clear(matching, 0, 5);
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    if (values[i] == values[j])
+                        matching[i]++;
+                }
+            }
+
+            int largestNumMatching = 0;
+            int largestValue = -1;
+            for (int i = 0; i < 5; i++)
+            {
+                if (matching[i] > largestNumMatching)
+                {
+                    largestNumMatching = matching[i];
+                    largestValue = values[i];
+                }
+            }
+
+            int largestOther = -1;
+            
+            for (int i = 0; i < 5; i++)
+            {
+                if (matching[i] != largestNumMatching)
+                    if (values[i] > largestOther)
+                        largestOther = values[i];
+            }
+
+            score += "FoaK";
+            if (largestNumMatching == 4)
+            {
+                score += largestValue.ToString("00"); //Four of a kind
+                score += largestOther.ToString("00");
+            }
+            else
+            {
+                score += "0000";
+            }
+
+            score += "FH";
+            if (largestNumMatching == 3)
+            {
+                int otherpair = 0;
+                for (int i = 0; i < 5; i++)
+                {
+                    if (matching[i] != largestNumMatching)
+                        if (values[i] == largestOther)
+                            otherpair++;
+                }
+                if (otherpair == 2)
+                {
+                    score += largestValue.ToString("00"); //Full house
+                    score += largestOther.ToString("00");
+                }
+                else
+                {
+                    score += "0000";
+                }
+            }
+            else
+            {
+                score += "0000";
+            }
+
+            score += "Flush";
+            if (flush)
+                score += values[0].ToString("00");
+            else
+                score += "00";
+
+            score += "Straight";
+            if(straight)
+                score += values[0].ToString("00");
+            else
+                score += "00";
+
+            score += "ToaK";
+            if (largestNumMatching == 3)
+            {
+                score += largestValue.ToString("00"); //Three of a kind
+                score += largestOther.ToString("00");
+            }
+            else
+            {
+                score += "0000";
+            }
+
+            score += "TP";
+            int numpairs = 0;
+            for (int i = 0; i < 5; i++)
+            {
+                if (matching[i] == 2)
+                    numpairs++;
+            }
+            if (numpairs == 4) //2 pair
+            {
+                if (largestValue > largestOther)
+                {
+                    score += largestValue.ToString("00"); //Two Pair
+                    score += largestOther.ToString("00");
+                }
+                else
+                {
+                    score += largestOther.ToString("00"); //Two Pair
+                    score += largestValue.ToString("00");
+                }
+            }
+            else
+            {
+                score += "0000";
+            }
+
+            score += "OnePair";
+            if (largestNumMatching == 2)
+            {
+                score += largestValue.ToString("00"); //Pair
+                score += largestOther.ToString("00");
+            }
+            else
+            {
+                score += "0000";
+            }
+
+            score += "HK";
+            score += values[0].ToString("00");
+
+            return score; 
+        }
+    
+        internal static void BacktrackP60(HashSet<long> set,List<List<long>> pairs, int pairIdx)
+        {
+            if(set.Count == 0)
+            {
+ 	            for(int idx = pairIdx; idx < pairs.Count; idx++)
+                {
+                    List<long> pair = pairs[idx];
+                    set.Add(pair[0]);
+                    set.Add(pair[1]);
+                    Console.WriteLine(idx);
+                    BacktrackP60(set, pairs, idx + 1);
+
+                    set.Remove(pair[0]);
+                    set.Remove(pair[1]);
+
+                }
+
+            }
+            else
+            {
+                for(int idx = pairIdx; idx < pairs.Count; idx++)
+                {
+                    long candidate = -1;
+                    List<long> pair = pairs[idx];
+                    if(set.Contains(pair[0]))
+                    {
+                        candidate = pair[1];
+                    }
+                    if(set.Contains(pair[1]))
+                    {
+                        candidate = pair[0];
+                    }
+
+                    if (candidate == 673)
+                    {
+                    }
+
+                    if (candidate < 0)
+                        continue;
+
+                    int count = 1;
+
+                    for (int idx2 = idx + 1; idx2 < pairs.Count; idx2++)
+                    {
+                        List<long> pair2 = pairs[idx2];
+                        if (set.Contains(pair2[0]) && candidate == pair2[1] || set.Contains(pair2[1]) && candidate == pair2[0])
+                        {
+                           count++;
+                        }
+
+                        if(count >= set.Count)
+                            break;
+                    }
+
+                    if(count >= set.Count)
+                    {
+                        
+
+                        set.Add(candidate);
+
+                        if (set.Count >= 5)
+                        {
+                            Console.WriteLine("Count: {0}", count);
+                            foreach (long l in set)
+                                Console.Write("{0} ", l);
+                            Console.ReadLine();
+                        }
+
+
+                        BacktrackP60(set, pairs, idx + 1);
+                        set.Remove(candidate);
+                    }
+
+                }
+            }
+
+        }
+
+        internal static void BacktrackP61(List<int> solution, CachedFunction<long, long>[] fcns, bool[] used)
+        {
+            int num = solution.Last();
+            int prefix = int.Parse(num.ToString().Substring(2))*100;
+            if (prefix < 100)
+                return;
+
+            #region Check if entire solution is valid)
+            bool allUsed = true;
+            for (int fcn = 0; fcn < fcns.Length; fcn++)
+            {
+                if (!used[fcn])
+                    allUsed = false;
+            }
+            if (allUsed)
+            {
+                string last = solution.Last().ToString().Substring(2);
+                string first = solution.First().ToString().Substring(0, 2);
+
+                if (last == first)
+                {
+                    foreach (int i in solution)
+                        Console.Write("{0} ", i);
+                    Console.WriteLine("");
+                    Console.WriteLine("Sum: {0}", solution.Sum());
+                }
+                else
+                {
+                    return;
+                }
+            }
+            #endregion
+
+
+            for (int j = 1; j < 100; j++)
+            {
+                for (int fcn = 0; fcn < fcns.Length; fcn++)
+                {
+                    if (used[fcn])
+                        continue;
+
+
+                    if (fcns[fcn].IsResult(prefix + j))
+                    {
+                        used[fcn] = true;
+                        solution.Add(prefix + j);
+
+                        BacktrackP61(solution, fcns, used);
+
+                        used[fcn] = false;
+                        solution.Remove(prefix + j);
+                    }
+                }
+            }
+        }
+
     }
-}

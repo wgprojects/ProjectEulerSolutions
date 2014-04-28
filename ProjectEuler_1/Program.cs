@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 
 namespace ProjectEuler_1
 {
@@ -9,8 +10,13 @@ namespace ProjectEuler_1
     {
         static void Main(string[] args)
         {
-            Solved.Problem53();
-            Console.WriteLine("Done");
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            
+            Solved.Problem61();
+
+            sw.Stop();
+            Console.WriteLine("Done in {0:0.000}s", sw.ElapsedMilliseconds / 1000f);
             Console.ReadKey();
         }
 
