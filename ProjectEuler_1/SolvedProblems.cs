@@ -2778,6 +2778,102 @@ namespace ProjectEuler_1
 
         internal static void Problem62()
         {
+            //April 28, 2014
+            int numMatchesToFind = 5;
+            List<int[]> digitsOfCube = new List<int[]>();
+            List<int> cubes = new List<int>();
+            int input = 1;
+            int numDig = 1;
+            bool found = false;
+
+            while (!found)
+            {
+                string val = ((long)Math.Pow(input, 3)).ToString();
+                if (val.Length > numDig)
+                {
+                    numDig = val.Length;
+
+                    for(int i = 0; i<digitsOfCube.Count; i++)
+                    {
+                        int[] one = digitsOfCube[i];
+                        int numMatches = 0;
+
+                        for (int j = i; j < digitsOfCube.Count; j++)
+                        {
+                            int[] other = digitsOfCube[j];
+
+                            bool match = true;
+                            for (int k = 0; k < 10; k++)
+                            {
+                                if (one[k] != other[k])
+                                {
+                                    match = false;
+                                    break;
+                                }
+                            }
+
+                            if (match)
+                                numMatches++;
+                        }
+
+                        if (numMatches == numMatchesToFind)
+                        {
+                            Console.WriteLine("Smallest cube with {0} permutations which are also cube is {1}^3 = {2}", numMatchesToFind, cubes[i], Math.Pow(cubes[i], 3));
+                            found = true;
+                            break;
+                        }
+                    }
+
+
+                    digitsOfCube.Clear();
+                    cubes.Clear();
+                }
+
+                int[] digs = new int[10];
+                Array.Clear(digs, 0, 10);
+                foreach (char c in val)
+                    digs[c - '0']++;
+
+                digitsOfCube.Add(digs);
+                cubes.Add(input);
+                input++;
+
+            }
+        }
+
+        internal static void Problem63()
+        {
+            //April 29, 2014
+            //Initially forgot to include b=1, so my solution was off by one :(
+
+            int lastLen = -1;
+            int count = 0;
+            for (int power = 0; power < 1000000; power++)
+            {
+                for (int b = 1; b < 10; b++)
+                {
+                    int len = (int)Math.Floor(power * Math.Log10(b) + 1);
+
+                    if (len == power) 
+                    {
+                        lastLen = len;
+                        Console.WriteLine("{0}^{1}={2}", b, power, Math.Pow(b, power));
+                    }
+
+                    if (len == power)
+                        count++;
+                    if (len > power)
+                    {
+                        Console.WriteLine("Stop at len{0} {1}^{2}", len, b, power);
+                        break;
+                    }
+                }
+            }
+            Console.WriteLine("{0} n-digit positive integers exist which are also an nth power.", count);
+        }
+
+        internal static void Problem64()
+        {
             throw new NotImplementedException();
         }
     }
