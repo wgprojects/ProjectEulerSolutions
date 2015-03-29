@@ -13,7 +13,7 @@ namespace ProjectEuler_1
             Stopwatch sw = new Stopwatch();
             sw.Start();
             
-            Solved.Problem59();
+            Solved.Problem66();
 
             sw.Stop();
             Console.WriteLine("Done in {0:0.000}s", sw.ElapsedMilliseconds / 1000f);

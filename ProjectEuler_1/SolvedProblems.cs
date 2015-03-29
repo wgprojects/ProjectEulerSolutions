@@ -100,14 +100,14 @@ namespace ProjectEuler_1
             int max = 20;
             long multiple = 1;
             //for (int i = max; i > 1; i-- )
-            for (int i = 1; i<= max; i++)
+            for (int i = 1; i <= max; i++)
             {
                 List<int> divisors = Util.PrimeFactorization(i);
                 foreach (int ad in allDivisors)
                     divisors.Remove(ad); //Remove pre-existing copies
 
                 foreach (int d in divisors)
-                        allDivisors.Add(d); //Then add new ones.
+                    allDivisors.Add(d); //Then add new ones.
 
             }
 
@@ -244,7 +244,7 @@ namespace ProjectEuler_1
                 {
                     sum += i;
                     Console.WriteLine(String.Format("{0,15}: {1,7} is prime", sum, i));
-                    
+
 
                 }
             }
@@ -282,7 +282,7 @@ namespace ProjectEuler_1
             int col = 0;
             foreach (string line in gridInput)
             {
-                int row = 0; 
+                int row = 0;
                 string[] parts = line.Split(new char[] { ' ' });
                 foreach (string colPart in parts)
                 {
@@ -331,7 +331,7 @@ namespace ProjectEuler_1
 
 
             //Horizontal
-            for (int r = 0; r < 20; r++) 
+            for (int r = 0; r < 20; r++)
             {
                 for (int c = 0; c <= 20 - 4; c++)
                 {
@@ -360,7 +360,7 @@ namespace ProjectEuler_1
             for (int rc = 2; rc < 20 + 20 - 4; rc++)
             {
                 int initialOffset = Math.Max(0, rc - 19);
-                for (int offset = initialOffset; offset <= (rc - 3) - initialOffset ; offset++)
+                for (int offset = initialOffset; offset <= (rc - 3) - initialOffset; offset++)
                 {
                     int mult = 1;
                     for (int rcx = 0; rcx < 4; rcx++)
@@ -438,7 +438,7 @@ namespace ProjectEuler_1
 
         internal static void Problem13()
         {
-#region input
+            #region input
             double[] input = new double[100] { 
                 37107287533902102798797998220837590246510135740250d,
                 46376937677490009712648124896970078050417018260538d,
@@ -541,7 +541,7 @@ namespace ProjectEuler_1
                 20849603980134001723930671666823555245252804609722d,
                 53503534226472524250874054075591789781264330331690d
             };
-#endregion
+            #endregion
 
             List<double> sorted = input.ToList();
             sorted.Sort();
@@ -603,7 +603,7 @@ namespace ProjectEuler_1
                 if (!grid[x, y].HasValue)
                     ComputeRoutes(size, grid, x + 1, y);
 
-                xsum += grid[x+1, y].Value;
+                xsum += grid[x + 1, y].Value;
                 xAvail = true;
             }
 
@@ -643,7 +643,7 @@ namespace ProjectEuler_1
             //    grid[x, y] = sum;
             //}
 
-            
+
         }
 
         internal static void Problem16()
@@ -705,7 +705,7 @@ namespace ProjectEuler_1
             }
 
 
-           
+
 
 
             for (int line = 0; line < depth; line++)
@@ -765,7 +765,7 @@ namespace ProjectEuler_1
                     largest = sums[col, depth - 1];
             }
             Console.WriteLine("Largest: " + largest.ToString());
-            
+
         }
 
         internal static void Problem19()
@@ -779,9 +779,9 @@ namespace ProjectEuler_1
             while (true)
             {
                 bool leapYear = (year % 4) == 0;
-                if((year % 100) == 0)
+                if ((year % 100) == 0)
                     leapYear = false;
-                if((year % 400) == 0)
+                if ((year % 400) == 0)
                     leapYear = true;
 
                 if ((day % 7) == 0)
@@ -841,10 +841,10 @@ namespace ProjectEuler_1
                 year++;
             }
 
-            
+
             for (int i = 0; i < day; i++)
             {
-                
+
             }
 
             Console.WriteLine("Days: " + day.ToString());
@@ -909,7 +909,7 @@ namespace ProjectEuler_1
             }
 
             int sumOfAmbicables = 0;
-            foreach(int i in HalfOfAmicable)
+            foreach (int i in HalfOfAmicable)
             {
                 sumOfAmbicables += i;
                 sumOfAmbicables += sumOfDivisors[i];
@@ -984,7 +984,7 @@ namespace ProjectEuler_1
                     }
                 }
 
-                if(!canBeWrittenAsSumOfTwoAbundants)
+                if (!canBeWrittenAsSumOfTwoAbundants)
                     SumOfCantBeWrittenAsSumOfTwoAbundants += i;
 
             }
@@ -995,7 +995,7 @@ namespace ProjectEuler_1
         internal static void Problem24()
         {
             int idx = 0;
-            List<int> input = new List<int>(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9});
+            List<int> input = new List<int>(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 });
             foreach (List<int> subsetPermuted in Util.Permute(input))
             {
                 idx++;
@@ -1024,7 +1024,7 @@ namespace ProjectEuler_1
             BigInteger target = 1;
             for (int i = 1; i < 1000; i++)
                 target *= 10;
-            while(true)
+            while (true)
             {
                 n = nm1 + nm2;
                 nm2 = nm1;
@@ -1149,12 +1149,12 @@ namespace ProjectEuler_1
                         //Console.WriteLine("n/a: {0}", quotient.ToString());
                         break;
                     }
-                    
+
 
                     if (dividedSteps.Contains(dividend))
                     {
                         repeatedLength = dividedSteps.Count - dividedSteps.IndexOf(dividend);
-                        
+
 
                         if (repeatedLength > longestRepeatingCount)
                         {
@@ -1236,7 +1236,7 @@ namespace ProjectEuler_1
 
             int current = 1;
             int n = 1001; //For an nxn grid
-            for(int i = 1; i <= n; i+= 2)
+            for (int i = 1; i <= n; i += 2)
             {
                 List<int> square = new List<int>();
 
@@ -1249,7 +1249,7 @@ namespace ProjectEuler_1
                 //3: 4x2 //2-9
                 //5: 4x4 //10-25
                 //7: 4x6
-               
+
                 spiralSquares.Add(square);
             }
 
@@ -1265,7 +1265,7 @@ namespace ProjectEuler_1
                 {
                     Console.Write("Diagonals of square with count {0}: ", count);
                     count = count / 4;
-                    for(int i=square.Count - 1; i>0; i-= count)
+                    for (int i = square.Count - 1; i > 0; i -= count)
                     {
                         Console.Write("{0}, ", square[i]);
                         sumOfDiagonals += square[i];
@@ -1311,7 +1311,7 @@ namespace ProjectEuler_1
                         if (pair[0] == finalA && pair[1] == finalB)
                         {
                             Console.WriteLine("I think that {0}^{1} == {2}^{3}", pair[0], pair[1], a, b);
-                            found = true; 
+                            found = true;
                             break;
                         }
                     }
@@ -1464,7 +1464,7 @@ namespace ProjectEuler_1
                                 long matingDivisor = prod / divisor;
                                 int matingLen = matingDivisor.ToString().Length;
 
-                                if ((len == lenA && matingLen == lenB) || 
+                                if ((len == lenA && matingLen == lenB) ||
                                     (len == lenB && matingLen == lenA))
                                 {
                                     foreach (char c in divisor.ToString())
@@ -1496,14 +1496,14 @@ namespace ProjectEuler_1
                                         Console.WriteLine("{0,4} x {1,4} = {2,4} is 1-9 pandigital", divisor, matingDivisor, prod);
                                         pandigitalProducts.Add(prod);
                                     }
-                                    
+
                                 }
                             }
                         }
                     }
-                    
-                    
-                    
+
+
+
 
 
                 }
@@ -1515,7 +1515,7 @@ namespace ProjectEuler_1
 
             Console.WriteLine(sumOfPandigitalProducts);
 
-              
+
         }
 
         internal static void Problem33()
@@ -1544,7 +1544,7 @@ namespace ProjectEuler_1
                     num = H * 10 + NL;
                     if (num * L == NL * den && num < den && num * L > 0)
                     {
-                //        Console.WriteLine("Curious - {0}/{1} == {2}/{3}", num, den, NL, H);
+                        //        Console.WriteLine("Curious - {0}/{1} == {2}/{3}", num, den, NL, H);
                     }
 
                     num = NL * 10 + H;
@@ -1577,7 +1577,7 @@ namespace ProjectEuler_1
                 //}
 
 
-                
+
             }
 
             int num2 = 16 * 26 * 19 * 49;
@@ -1628,7 +1628,7 @@ namespace ProjectEuler_1
 
             int max = 1000000;
             PrimesSieve ps = new PrimesSieve(max);
-            for (int i = 1; i < max; i += (i<3?1:2))
+            for (int i = 1; i < max; i += (i < 3 ? 1 : 2))
             {
                 if (!ps.IsPrime(i))
                     continue;
@@ -1671,7 +1671,7 @@ namespace ProjectEuler_1
         {
             //April 23, 2014
             int sum = 0;
-            for(int i=1; i<1000000; i++)
+            for (int i = 1; i < 1000000; i++)
             {
                 if (Util.IsPalindrome(i.ToString()))
                 {
@@ -1750,7 +1750,7 @@ namespace ProjectEuler_1
 
                         if (result2 > 900000000 && result2 <= 987654321)
                         {
-                            
+
 
                             HashSet<char> digits2 = new HashSet<char>(digits);
                             foreach (char c in result2.ToString())
@@ -1783,7 +1783,7 @@ namespace ProjectEuler_1
                     for (int a = 1; a < p - h; a++)
                     {
                         int b = p - h - a;
-                        int hypsq = (int) Math.Pow(h, 2);
+                        int hypsq = (int)Math.Pow(h, 2);
                         int asqpbsq = (int)(Math.Pow(a, 2) + Math.Pow(b, 2));
 
                         if (hypsq == asqpbsq)
@@ -1937,7 +1937,7 @@ namespace ProjectEuler_1
                     if (subnum % prime[i] != 0)
                         notDivisible = true;
                 }
-                if(!notDivisible)
+                if (!notDivisible)
                 {
                     Console.WriteLine("{0} is substring divisible by primes", number);
                     sum += number;
@@ -1975,7 +1975,7 @@ namespace ProjectEuler_1
                     int Plower = Pi - Pj;
 
                     bool contains = false;
-                    for (int idx = 1; idx < i; idx++ )
+                    for (int idx = 1; idx < i; idx++)
                     {
 
                         int y = cf.Calculate(idx);
@@ -2071,7 +2071,7 @@ namespace ProjectEuler_1
         {
             //April 25, 2014
             PrimesSieve ps = new PrimesSieve(1000000);
-            for (int i = 5; i < 1000000; i+=2)
+            for (int i = 5; i < 1000000; i += 2)
             {
                 if (!ps.IsPrime(i))
                 {
@@ -2110,7 +2110,7 @@ namespace ProjectEuler_1
             int number = 4;
             int consecutive = 0;
 
-            while(numDistinctFactorsRequired <= 4)
+            while (numDistinctFactorsRequired <= 4)
             {
                 IEnumerable<int> factors = Util.PrimeFactorization(number++).Distinct();
 
@@ -2126,7 +2126,7 @@ namespace ProjectEuler_1
                 if (consecutive == numDistinctFactorsRequired)
                 {
                     Console.WriteLine("{0} numbers with {0} distinct factors:", numDistinctFactorsRequired);
-                    for(int i=number - numDistinctFactorsRequired; i<number; i++)
+                    for (int i = number - numDistinctFactorsRequired; i < number; i++)
                         Console.Write("{0}, ", i);
                     Console.WriteLine("");
 
@@ -2216,9 +2216,9 @@ namespace ProjectEuler_1
             {
                 int numConsecutive = 0;
                 int sum = 0;
-                for (int i = primeStart; i<1000000 ; i++)
+                for (int i = primeStart; i < 1000000; i++)
                 {
-                    if(!ps.IsPrime(i))
+                    if (!ps.IsPrime(i))
                         continue;
 
                     sum += i;
@@ -2265,7 +2265,7 @@ namespace ProjectEuler_1
                     //Console.WriteLine("");
                     //Console.WriteLine("Replacing {0}", nReplace);
 
-                    
+
                     foreach (List<int> toSubstPerm in Util.Permute(toSubstitute))
                     {
                         //Console.WriteLine("-");
@@ -2293,7 +2293,7 @@ namespace ProjectEuler_1
                         {
                             string val = primeStart.ToString();
                             string newVal = "";
-                            for (int j = 0; j < toSubstPerm.Count; j++ )
+                            for (int j = 0; j < toSubstPerm.Count; j++)
                             {
                                 if (toSubstPerm[j] <= nReplace)
                                     newVal += i.ToString();
@@ -2314,13 +2314,13 @@ namespace ProjectEuler_1
                         {
                             //Console.WriteLine("{2}: {0}, {1}", primeStart, newVal2, repr);
                             Console.Write("{0} ({1}, {2}, {3}): ", primeReplacements, nReplace, repr, primeStart);
-                            foreach(string s in pr)
+                            foreach (string s in pr)
                                 Console.Write("{0}, ", s);
                             Console.WriteLine("");
                         }
                         if (primeReplacements == 8)
                         {
-                            if(int.Parse(pr[0]) > 100000)
+                            if (int.Parse(pr[0]) > 100000)
                                 found = true;
                         }
                     }
@@ -2357,7 +2357,7 @@ namespace ProjectEuler_1
 
                     List<char> chars2 = new List<char>(chars);
                     foreach (char c in digm)
-                        if(chars2.Contains(c))
+                        if (chars2.Contains(c))
                             chars2.Remove(c);
 
                     if (chars2.Count != 0)
@@ -2387,7 +2387,7 @@ namespace ProjectEuler_1
                 {
                     double lognCr = Util.GammaLn(n + 1) - Util.GammaLn(r + 1) - Util.GammaLn(n - r + 1);
 
-                    if(lognCr > Math.Log(1000000))
+                    if (lognCr > Math.Log(1000000))
                         count++;
                 }
             }
@@ -2418,7 +2418,7 @@ namespace ProjectEuler_1
                 if (Util.CompareCardHands(P1, P2))
                     P1Wins++;
 
-                
+
             }
 
             Console.WriteLine("P1 won {0} times", P1Wins);
@@ -2444,7 +2444,7 @@ namespace ProjectEuler_1
                     }
                 }
 
-                if(isLychrel)
+                if (isLychrel)
                     numLychrelNumbers++;
             }
 
@@ -2553,7 +2553,7 @@ namespace ProjectEuler_1
                     nTotal++;
                 }
 
-                if((nPrime / (float)nTotal) < 0.1)
+                if ((nPrime / (float)nTotal) < 0.1)
                 {
                     break;
                 }
@@ -2578,9 +2578,9 @@ namespace ProjectEuler_1
             float maxProbability = 0;
             int[] maxPW = null;
 
-            for(int a = 'a'; a<='z'; a++)
+            for (int a = 'a'; a <= 'z'; a++)
             {
-                for(int b = 'a'; b<='z'; b++)
+                for (int b = 'a'; b <= 'z'; b++)
                 {
                     for (int c = 'a'; c <= 'z'; c++)
                     {
@@ -2686,7 +2686,7 @@ namespace ProjectEuler_1
                 sum += decr;
             }
             Console.WriteLine("Sum of ASCII text: {0}", sum);
-           
+
         }
 
         internal static void Problem60()
@@ -2703,7 +2703,7 @@ namespace ProjectEuler_1
             {
                 for (long mate = prime + 2; mate < 30000; mate++)
                 {
-                     if (!ps.IsPrime(mate))
+                    if (!ps.IsPrime(mate))
                         continue;
 
                     string one = prime.ToString() + mate.ToString();
@@ -2729,15 +2729,15 @@ namespace ProjectEuler_1
 
             HashSet<long> set = new HashSet<long>();
 
-            foreach(List<long> pair in pairs)
+            foreach (List<long> pair in pairs)
             {
                 if (pair.Contains(5197) || pair.Contains(5701) || pair.Contains(6733) || pair.Contains(8389))
-                        Console.WriteLine("{0} {1}", pair[0], pair[1]);
+                    Console.WriteLine("{0} {1}", pair[0], pair[1]);
             }
 
-                Console.WriteLine("Pairings complete");
-                Util.BacktrackP60(set, pairs, 0);
-            }
+            Console.WriteLine("Pairings complete");
+            Util.BacktrackP60(set, pairs, 0);
+        }
 
         internal static void Problem61()
         {
@@ -2752,9 +2752,9 @@ namespace ProjectEuler_1
 
             Triangle.SetInverse(a => Math.Pow((int)Math.Sqrt(8 * a + 1), 2) == a * 8 + 1);
             Square.SetInverse(a => Math.Pow((int)Math.Sqrt(a), 2) == a);
-            Pentagonal.SetInverse(a => (1 + Math.Sqrt(24 * a + 1)) / 6 == (int)((1 + Math.Sqrt(24 * a + 1)) / 6) );
-            Hexagonal.SetInverse(a => (1 + Math.Sqrt(8 * a + 1)) / 4 == (int)((1 + Math.Sqrt(8 * a + 1)) / 4) );
-            Heptagonal.SetInverse(a => (3 + Math.Sqrt(40 * a + 9)) / 10 == (int)((3 + Math.Sqrt(40 * a + 9)) / 10) );
+            Pentagonal.SetInverse(a => (1 + Math.Sqrt(24 * a + 1)) / 6 == (int)((1 + Math.Sqrt(24 * a + 1)) / 6));
+            Hexagonal.SetInverse(a => (1 + Math.Sqrt(8 * a + 1)) / 4 == (int)((1 + Math.Sqrt(8 * a + 1)) / 4));
+            Heptagonal.SetInverse(a => (3 + Math.Sqrt(40 * a + 9)) / 10 == (int)((3 + Math.Sqrt(40 * a + 9)) / 10));
             Octagonal.SetInverse(a => (1 + Math.Sqrt(3 * a + 1)) / 3 == (int)((1 + Math.Sqrt(3 * a + 1)) / 3));
 
             CachedFunction<long, long>[] fcns = new CachedFunction<long, long>[] { Triangle, Square, Pentagonal, Hexagonal, Heptagonal, Octagonal };
@@ -2763,7 +2763,7 @@ namespace ProjectEuler_1
             Array.Clear(used, 0, fcns.Length);
             used[5] = true;
 
-            for(int i=1010; i<=9999; i++)
+            for (int i = 1010; i <= 9999; i++)
             {
                 if (!Octagonal.IsResult(i))
                     continue;
@@ -2793,7 +2793,7 @@ namespace ProjectEuler_1
                 {
                     numDig = val.Length;
 
-                    for(int i = 0; i<digitsOfCube.Count; i++)
+                    for (int i = 0; i < digitsOfCube.Count; i++)
                     {
                         int[] one = digitsOfCube[i];
                         int numMatches = 0;
@@ -2854,7 +2854,7 @@ namespace ProjectEuler_1
                 {
                     int len = (int)Math.Floor(power * Math.Log10(b) + 1);
 
-                    if (len == power) 
+                    if (len == power)
                     {
                         lastLen = len;
                         Console.WriteLine("{0}^{1}={2}", b, power, Math.Pow(b, power));
@@ -2872,12 +2872,249 @@ namespace ProjectEuler_1
             Console.WriteLine("{0} n-digit positive integers exist which are also an nth power.", count);
         }
 
+
+
+
+
         internal static void Problem64()
         {
-            throw new NotImplementedException();
+            //March 17, 2015
+            int sum = 0;
+            for (int i = 2; i < 10000; i++)
+                if (ContinuedFractionSquareRootPeriodIsOdd(i))
+                   sum++;
+
+            Console.WriteLine(sum);
+                
+        }
+
+
+        static bool ContinuedFractionSquareRootPeriodIsOdd(int n)
+        {
+            int integer = (int)Math.Sqrt(n);
+            int otherDen = -1 * integer;
+
+            return CalculateCoefficient(1, n, otherDen, new List<int>(){integer}, new List<Tuple<int, int>>());
+
+        }
+        static bool CalculateCoefficient(int num, int n, int otherDen, List<int> coefficients, List<Tuple<int, int>> states)
+        {
+            if (num == 0)
+                return false;
+
+            int integer = (int)(num / (Math.Sqrt(n) + otherDen));
+
+            int nextNum = (n - otherDen * otherDen) / num;
+
+            int nextOtherDen = Math.Abs(otherDen) - integer * nextNum;
+
+            
+            Tuple<int, int> state = new Tuple<int, int>(nextNum, nextOtherDen);
+
+            if (states.Contains(state))
+            {
+                //if((states.Count % 2) == 1)
+                //    Console.WriteLine(String.Join(",", coefficients)+"\n\n\n");
+                return (states.Count % 2) == 1; //Returns true if count(states) is odd.
+            }
+
+            states.Add(state);
+            coefficients.Add(integer);
+            return CalculateCoefficient(nextNum, n, nextOtherDen, coefficients, states);
+        }
+
+
+        internal static void Problem65()
+        {
+            //March 17, 2015
+            List<int> coef2 = new List<int>(){};
+            for(int k=1; k<34; k++)
+                coef2.AddRange(new List<int>(){1, 2 * k, 1});
+
+            List<int> coef = new List<int>() { };
+            for (int max = 0; max < 99; max++)
+            {
+                coef.Add(coef2[max]);
+            }
+            //Rational r = new Rational(2, 1);
+            List<Rational> dens = new List<Rational>();
+
+            Rational bla = GetDens(dens, coef, 0).Add(new Rational(2, 1));
+
+            //Console.WriteLine(String.Join("\n", dens));
+            Console.WriteLine(bla);
+
+            BigInteger num = bla.Numerator;
+            BigInteger numSum = 0;
+            while (num > 0)
+            {
+                BigInteger mod = BigInteger.ModPow(num, 1, 10);
+                num -= mod;
+                num = num / 10;
+                numSum += mod;
+            }
+            Console.WriteLine("Sum of numerator digits: " + numSum);
+        }
+
+
+        private static Rational GetDens(List<Rational> dens, List<int> coefs, int i)
+        {
+            if (i >= coefs.Count)
+                return new Rational(0, 1);
+
+            Rational den = new Rational(1, new Rational(coefs[i], 1).Add(GetDens(dens, coefs, i + 1)));
+            dens.Insert(0, den);
+            return den;
+        }
+
+        internal static void Problem66()
+        {
+            //x = sqrt(1 + D*y^2)
+            BigInteger largestX = 0;
+            int DofLargestX = -1;
+
+            for (int D = 900; D <= 1000; D++)
+            {
+                double sqrt = Math.Sqrt(D);
+                if ((int)sqrt == sqrt)
+                    continue;
+
+                BigInteger x = quadraticDiophantine(D);
+                Console.WriteLine("D={0} => X={1}", D, x);
+
+                if (x > largestX)
+                {
+                    //Console.WriteLine("D={0} => X={1}", D, x);
+                    largestX = x;
+                    DofLargestX = D;
+                }
+            }
+
+        }
+
+        private static BigInteger quadraticDiophantine(int D)
+        {
+            //x = sqrt(1 + D*y^2)
+            for (BigInteger x = 2; x < D*D*D; x++)
+            {
+                //(1 + D*y^2) must be a square
+                BigInteger sq = BigInteger.Pow(x, 2);
+                BigInteger dy = sq - 1;
+
+                BigInteger remainder;
+                BigInteger ySq = BigInteger.DivRem(dy, D, out remainder);
+
+                if (remainder > 0)
+                    continue;
+
+                double y2 = (double)ySq;
+                double y = (int)Math.Sqrt(y2);
+                if (y * y != y2)
+                    continue;
+
+                if (1 + D * ySq != sq)
+                    continue;
+
+                return x;
+            }
+            return -1;
+        }
+    }//end of class
+
+    class Rational
+    {
+        BigInteger num;
+        BigInteger den;
+
+        public BigInteger Numerator
+        {
+            get { return num; }
+        }
+        public BigInteger Denominator
+        {
+            get { return den; }
+        } 
+
+        public Rational(BigInteger n, BigInteger d)
+        {
+            num = n;
+            den = d;
+        }
+        public Rational(BigInteger n, Rational d)
+        {
+            num = n*d.den;
+            den = d.num;
+
+            BigInteger div = GCD(num, den);
+            num /= div;
+            den /= div;
+        }
+        public Rational Clone()
+        {
+            return new Rational(num, den);
+        }
+        public Rational Inverse()
+        {
+            return new Rational(den, num);
+        }
+        public Rational Multiply(long x)
+        {
+            Rational r = this.Clone();
+            r.num *= x;
+
+            BigInteger div = GCD(r.num, r.den);
+            r.num /= div;
+            r.den /= div;
+
+            return r;
+        }
+
+        public Rational Add(Rational other)
+        {
+            Rational r = this.Clone();
+            BigInteger newNum = r.num * other.den + other.num * r.den;
+            BigInteger newDen = r.den * other.den;
+
+            r.num = newNum;
+            r.den = newDen;
+
+            BigInteger div = GCD(r.num, r.den);
+            r.num /= div;
+            r.den /= div;
+
+            return r;
+        }
+
+        public override string ToString()
+        {
+            return String.Format("{0}/{1} = {2:0.0000}", num, den, BigInteger.Divide(num, den));
+        }
+
+        public Rational Divide(BigInteger x)
+        {
+            Rational r = this.Clone();
+            r.den *= x;
+
+            BigInteger div = GCD(r.num, r.den);
+            r.num /= div;
+            r.den /= div;
+
+            return r;
+        }
+
+
+        private BigInteger GCD(BigInteger a, BigInteger b)
+        {
+            while (b > 0)
+            {
+                BigInteger rem = BigInteger.ModPow(a, 1, b);
+                a = b;
+                b = rem;
+            }
+            return a;
         }
     }
-    }//end of class
+
 
     class Card
     {
@@ -2896,8 +3133,8 @@ namespace ProjectEuler_1
                 c.number = n - '0';
             else
                 c.number = numbers.IndexOf(n) + 10;
-            
-            
+
+
             c.suit = suits.IndexOf(input[1]);
             return c;
         }
@@ -2908,7 +3145,9 @@ namespace ProjectEuler_1
         }
     }
 
-    class CachedFunction<T1, T2> where T1 : IComparable where T2 : IComparable
+    class CachedFunction<T1, T2>
+        where T1 : IComparable
+        where T2 : IComparable
     {
         Dictionary<T1, T2> cache = new Dictionary<T1, T2>();
 
@@ -2928,7 +3167,7 @@ namespace ProjectEuler_1
             {
                 T2 valueAtX = functionToCache(x);
 
-                if(cache.Count < 10000000)
+                if (cache.Count < 10000000)
                     cache.Add(x, valueAtX);
                 return valueAtX;
             }
@@ -2988,7 +3227,7 @@ namespace ProjectEuler_1
         {
             CollatzLengths.Add(1, 0);
 
-            
+
         }
 
         public int CollatzLength(long start)
@@ -3006,7 +3245,7 @@ namespace ProjectEuler_1
 
         public static long NextCollatz(long input)
         {
-            if((input & 1) == 1)
+            if ((input & 1) == 1)
             {
                 return input * 3 + 1;
             }
@@ -3024,7 +3263,7 @@ namespace ProjectEuler_1
         {
 
             notPrime = new bool[n];
-            
+
 
             notPrime[0] = true;
             notPrime[1] = true;
@@ -3034,11 +3273,11 @@ namespace ProjectEuler_1
                     continue;
 
                 int mult = 2;
-                while(mult * i < n) 
+                while (mult * i < n)
                 {
                     notPrime[mult * i] = true;
                     mult++;
-                } 
+                }
 
             }
         }
@@ -3135,23 +3374,23 @@ namespace ProjectEuler_1
             foreach (char c in input.ToString().Reverse())
                 rev += c;
 
-            return input + BigInteger.Parse(rev);   
+            return input + BigInteger.Parse(rev);
         }
         public static double GammaLn(int xx)
         {
             //From Numerical Recipes in C
-            double x,y,tmp,ser;
+            double x, y, tmp, ser;
             double[] cof = new double[6]{76.18009172947146,-86.50532032941677,
             24.01409824083091,-1.231739572450155,
             0.1208650973866179e-2,-0.5395239384953e-5};
             int j;
             x = xx;
             y = xx;
-            tmp=x+5.5;
-            tmp -= (x+0.5)*Math.Log(tmp);
-            ser=1.000000000190015;
-            for (j=0;j<=5;j++) ser += cof[j]/++y;
-            return -tmp+Math.Log(2.5066282746310005*ser/x);
+            tmp = x + 5.5;
+            tmp -= (x + 0.5) * Math.Log(tmp);
+            ser = 1.000000000190015;
+            for (j = 0; j <= 5; j++) ser += cof[j] / ++y;
+            return -tmp + Math.Log(2.5066282746310005 * ser / x);
 
         }
 
@@ -3183,7 +3422,7 @@ namespace ProjectEuler_1
             }
         }
 
-      
+
 
         /// <summary>
         /// Call foreach on this to receive all permutations of the input.
@@ -3287,7 +3526,7 @@ namespace ProjectEuler_1
             else
                 return (Spell(hundreds) + " hundred and " + Spell(num - hundreds * 100));
         }
-        
+
         /// <summary>
         /// Returns sum of natural numbers up to and including this number.
         /// </summary>
@@ -3352,14 +3591,14 @@ namespace ProjectEuler_1
                 {
                     divisors.Add(i);
                     long matchingDivisor = number / i;
-                    if(matchingDivisor != i)
+                    if (matchingDivisor != i)
                         divisors.Add(matchingDivisor);
 
                     if (matchingDivisor <= toCheck)
                         toCheck = matchingDivisor - 1;
                 }
             }
-            
+
             //divisors.Add(number);
 
             return divisors;
@@ -3433,32 +3672,32 @@ namespace ProjectEuler_1
                 values.Add(c.number);
             }
 
-            if(flush && values.Contains(10) && values.Contains(11) && values.Contains(12) && values.Contains(13) && values.Contains(14))
+            if (flush && values.Contains(10) && values.Contains(11) && values.Contains(12) && values.Contains(13) && values.Contains(14))
                 score += "RF1"; //Royal flush
             else
                 score += "RF0";
 
             bool straight = false;
 
-           
-            for(int i=2; i<=14; i++)
+
+            for (int i = 2; i <= 14; i++)
             {
-                if(values.Contains(i) && values.Contains(i+1) && values.Contains(i+2) && values.Contains(i+3) && values.Contains(i+4))
+                if (values.Contains(i) && values.Contains(i + 1) && values.Contains(i + 2) && values.Contains(i + 3) && values.Contains(i + 4))
                 {
                     straight = true;
                 }
             }
-            
 
-            if(straight & flush)
+
+            if (straight & flush)
                 score += "SF1";
             else
                 score += "SF0";
 
             values.Sort();
             values.Reverse();
-            
-            
+
+
             int[] matching = new int[5];
             Array.Clear(matching, 0, 5);
             for (int i = 0; i < 5; i++)
@@ -3482,7 +3721,7 @@ namespace ProjectEuler_1
             }
 
             int largestOther = -1;
-            
+
             for (int i = 0; i < 5; i++)
             {
                 if (matching[i] != largestNumMatching)
@@ -3533,7 +3772,7 @@ namespace ProjectEuler_1
                 score += "00";
 
             score += "Straight";
-            if(straight)
+            if (straight)
                 score += values[0].ToString("00");
             else
                 score += "00";
@@ -3588,14 +3827,14 @@ namespace ProjectEuler_1
             score += "HK";
             score += values[0].ToString("00");
 
-            return score; 
+            return score;
         }
-    
-        internal static void BacktrackP60(HashSet<long> set,List<List<long>> pairs, int pairIdx)
+
+        internal static void BacktrackP60(HashSet<long> set, List<List<long>> pairs, int pairIdx)
         {
-            if(set.Count == 0)
+            if (set.Count == 0)
             {
- 	            for(int idx = pairIdx; idx < pairs.Count; idx++)
+                for (int idx = pairIdx; idx < pairs.Count; idx++)
                 {
                     List<long> pair = pairs[idx];
                     set.Add(pair[0]);
@@ -3611,15 +3850,15 @@ namespace ProjectEuler_1
             }
             else
             {
-                for(int idx = pairIdx; idx < pairs.Count; idx++)
+                for (int idx = pairIdx; idx < pairs.Count; idx++)
                 {
                     long candidate = -1;
                     List<long> pair = pairs[idx];
-                    if(set.Contains(pair[0]))
+                    if (set.Contains(pair[0]))
                     {
                         candidate = pair[1];
                     }
-                    if(set.Contains(pair[1]))
+                    if (set.Contains(pair[1]))
                     {
                         candidate = pair[0];
                     }
@@ -3638,16 +3877,16 @@ namespace ProjectEuler_1
                         List<long> pair2 = pairs[idx2];
                         if (set.Contains(pair2[0]) && candidate == pair2[1] || set.Contains(pair2[1]) && candidate == pair2[0])
                         {
-                           count++;
+                            count++;
                         }
 
-                        if(count >= set.Count)
+                        if (count >= set.Count)
                             break;
                     }
 
-                    if(count >= set.Count)
+                    if (count >= set.Count)
                     {
-                        
+
 
                         set.Add(candidate);
 
@@ -3672,7 +3911,7 @@ namespace ProjectEuler_1
         internal static void BacktrackP61(List<int> solution, CachedFunction<long, long>[] fcns, bool[] used)
         {
             int num = solution.Last();
-            int prefix = int.Parse(num.ToString().Substring(2))*100;
+            int prefix = int.Parse(num.ToString().Substring(2)) * 100;
             if (prefix < 100)
                 return;
 
@@ -3726,3 +3965,4 @@ namespace ProjectEuler_1
         }
 
     }
+}
